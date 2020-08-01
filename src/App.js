@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
+import Login from './components/Login'
 import LoggedInMessage from './components/LoggedInMessage'
+import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -42,44 +43,32 @@ const App = () => {
     setPassword('')
   }
 
+  const logout = (user) => {
+    window.localStorage.removeItem(
+      'loggedBloglistappUser'
+    )
+
+    setUser(null)
+  }
+
   if (user === null) {
     return (
+      <Login 
+        handleLogin={handleLogin} username={username} setUsername={setUsername}
+        password={password} setPassword={setPassword} 
+      />
+    )
+  } else {
+    return (
       <div>
-        <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-          username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-          password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
+        <h2>blogs</h2>
+        <LoggedInMessage user={user.name} logout={logout} />
+        {blogs.map(blog =>
+        <Blog key={blog.id} blog={blog} />
+        )}
       </div>
     )
   }
-
-  return (
-    <div>
-      <h2>blogs</h2>
-      <LoggedInMessage user={user.name} />
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
-  )
 }
 
 export default App
