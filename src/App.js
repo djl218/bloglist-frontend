@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import Login from './components/Login'
 import LoggedInMessage from './components/LoggedInMessage'
+import Togglable from './components/Togglable'
 import NewBlogForm from './components/NewBlogForm'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
-import loginService from './services/login'
 import SuccessfulNotification from './components/SuccessfulNotification'
 import UnsuccessfuNotification from './components/UnsuccessfulNotification'
+import blogService from './services/blogs'
+import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [noSuccessMessage, setNoSuccessMessage] = useState(null)
+
+  const newBlogFormRef = React.createRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -67,34 +67,13 @@ const App = () => {
     setUser(null)
   }
 
-  const handleNewTitle = (event) => {
-    setNewTitle(event.target.value)
-  }
-
-  const handleNewAuthor = (event) => {
-    setNewAuthor(event.target.value)
-  }
-
-  const handleNewUrl = (event) => {
-    setNewUrl(event.target.value)
-  }
-
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
-
+  const addBlog = (blogObject) => {
+    newBlogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
         setSuccessMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
         setTimeout(() => {
           setSuccessMessage(null)
         }, 5000)
@@ -119,11 +98,9 @@ const App = () => {
         <SuccessfulNotification message={successMessage} />
         <LoggedInMessage user={user.name} logout={logout} />
         <h2>create new</h2>
-        <NewBlogForm 
-          addBlog={addBlog} newTitle={newTitle} handleNewTitle={handleNewTitle}
-          newAuthor={newAuthor} handleNewAuthor={handleNewAuthor} 
-          newUrl={newUrl} handleNewUrl={handleNewUrl} 
-        />
+        <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
+          <NewBlogForm addBlogToList={addBlog} />
+        </Togglable>
         {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
         )}
