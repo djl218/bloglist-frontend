@@ -93,6 +93,21 @@ const App = () => {
       })
   }
 
+  const deleteBlogInfoFor = (id) => {
+    const blog = blogs.find(n => n.id === id)
+    const confirmWindowForDelete = window.confirm(`Remove ${blog.title} by ${blog.author}?`)
+
+    if (confirmWindowForDelete === true) {
+      blogService
+        .deleteBlog(id)
+        .then(() => {
+          setBlogs(blogs.filter(blog => blog.id !== id))
+        })
+    } else {
+      return blogs
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -112,12 +127,18 @@ const App = () => {
         <LoggedInMessage user={user.name} logout={logout} />
         <h2>create new</h2>
         <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
-          <NewBlogForm user={user} addBlogToList={addBlog} />
+          <NewBlogForm addBlogToList={addBlog} />
         </Togglable>
         {blogs
           .sort((a, b) => b.likes - a.likes)
           .map(blog => 
-          <Blog key={blog.id} blog={blog} addOneLike={() => addOneLike(blog.id)}/>
+          <Blog 
+            user={user}
+            key={blog.id} 
+            blog={blog} 
+            addOneLike={() => addOneLike(blog.id)}
+            deleteBlogInfo={() => deleteBlogInfoFor(blog.id)}
+          />
         )}
       </div>
     )
