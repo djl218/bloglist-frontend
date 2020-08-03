@@ -20,9 +20,11 @@ const App = () => {
   const newBlogFormRef = React.createRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    blogService
+    .getAll()
+    .then(initialBlogs => {
+      setBlogs(initialBlogs)
+    })  
   }, [])
 
   useEffect(() => {
@@ -80,6 +82,17 @@ const App = () => {
       })
   }
 
+  const addOneLike = (id) => {
+    const blog = blogs.find(n => n.id === id)
+    const changedBlog = { ...blog, likes: blog.likes + 1}
+
+    blogService
+      .update(id, changedBlog)
+      .then(() => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : changedBlog))
+      })
+  }
+
   if (user === null) {
     return (
       <div>
@@ -99,10 +112,10 @@ const App = () => {
         <LoggedInMessage user={user.name} logout={logout} />
         <h2>create new</h2>
         <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
-          <NewBlogForm addBlogToList={addBlog} />
+          <NewBlogForm user={user} addBlogToList={addBlog} />
         </Togglable>
         {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} addOneLike={() => addOneLike(blog.id)}/>
         )}
       </div>
     )
