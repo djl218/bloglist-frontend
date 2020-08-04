@@ -7,7 +7,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
-    borderWidth: 1, 
+    borderWidth: 1,
     marginBottom: 5
   }
 
@@ -18,7 +18,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
     return (
       <div style={blogStyle}>
         <div style={hideWhenVisible}>
-         {blog.title} {blog.author}
+          {blog.title} {blog.author}
           <button onClick={() => setBlogInfoVisible(true)}>view</button>
         </div>
         <div style={showWhenVisible}>
@@ -46,7 +46,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
     return (
       <div style={blogStyle}>
         <div style={hideWhenVisible}>
-         {blog.title} {blog.author}
+          {blog.title} {blog.author}
           <button onClick={() => setBlogInfoVisible(true)}>view</button>
         </div>
         <div style={showWhenVisible}>
@@ -67,7 +67,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
         </div>
       </div>
     )
-  }  
-} 
+  }
+}
 
 export default Blog

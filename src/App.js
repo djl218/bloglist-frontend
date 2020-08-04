@@ -24,7 +24,7 @@ const App = () => {
     .getAll()
     .then(initialBlogs => {
       setBlogs(initialBlogs)
-    })  
+    })
   }, [])
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const App = () => {
 
   const addOneLike = (id) => {
     const blog = blogs.find(n => n.id === id)
-    const changedBlog = { ...blog, likes: blog.likes + 1}
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
 
     blogService
       .update(id, changedBlog)
@@ -113,9 +113,9 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         <UnsuccessfuNotification message={noSuccessMessage} />
-        <Login 
+        <Login
           handleLogin={handleLogin} username={username} setUsername={setUsername}
-          password={password} setPassword={setPassword} 
+          password={password} setPassword={setPassword}
         />
       </div>
     )
@@ -131,11 +131,11 @@ const App = () => {
         </Togglable>
         {blogs
           .sort((a, b) => b.likes - a.likes)
-          .map(blog => 
-          <Blog 
+          .map(blog =>
+          <Blog
             user={user}
-            key={blog.id} 
-            blog={blog} 
+            key={blog.id}
+            blog={blog}
             addOneLike={() => addOneLike(blog.id)}
             deleteBlogInfo={() => deleteBlogInfoFor(blog.id)}
           />
