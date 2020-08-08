@@ -14,60 +14,38 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
   const hideWhenVisible = { display: blogInfoVisible ? 'none' : '' }
   const showWhenVisible = { display: blogInfoVisible ? '' : 'none' }
 
-  if (user.username === blog.user.username) {
-    return (
-      <div style={blogStyle}>
-        <div style={hideWhenVisible}>
+  return (
+    <div style={blogStyle}>
+      <div style={hideWhenVisible} className="defaultBlogDisplay">
+        {blog.title} {blog.author}
+        <button onClick={() => setBlogInfoVisible(true)}>view</button>
+      </div>
+      <div style={showWhenVisible} className="blogDisplayAfterClick">
+        <div>
           {blog.title} {blog.author}
-          <button onClick={() => setBlogInfoVisible(true)}>view</button>
+          <button onClick={() => setBlogInfoVisible(false)}>hide</button>
         </div>
-        <div style={showWhenVisible}>
-          <div>
-            {blog.title} {blog.author}
-            <button onClick={() => setBlogInfoVisible(false)}>hide</button>
-          </div>
-          <div>
-            {blog.url}
-          </div>
-          <div>
-            {blog.likes}
-            <button onClick={addOneLike}>like</button>
-          </div>
-          <div>
-            {blog.user.name}
-          </div>
-          <div>
-            <button onClick={deleteBlogInfo}>remove</button>
-          </div>
+        <div>
+          {blog.url}
+        </div>
+        <div>
+          {blog.likes}
+          <button onClick={addOneLike}>like</button>
+        </div>
+        <div>
+          {blog.user.name}
+        </div>
+        <div>
+          {
+          user.username === blog.user.username
+          ? <button onClick={deleteBlogInfo}>remove</button>
+          : null
+          }
         </div>
       </div>
-    )
-  } else {
-    return (
-      <div style={blogStyle}>
-        <div style={hideWhenVisible}>
-          {blog.title} {blog.author}
-          <button onClick={() => setBlogInfoVisible(true)}>view</button>
-        </div>
-        <div style={showWhenVisible}>
-          <div>
-            {blog.title} {blog.author}
-            <button onClick={() => setBlogInfoVisible(false)}>hide</button>
-          </div>
-          <div>
-            {blog.url}
-          </div>
-          <div>
-            {blog.likes}
-            <button onClick={addOneLike}>like</button>
-          </div>
-          <div>
-            {blog.user.name}
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
+    </div>
+  )
+} 
+
 
 export default Blog
