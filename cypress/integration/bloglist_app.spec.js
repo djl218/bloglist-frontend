@@ -1,12 +1,18 @@
 describe('BlogList app', function() {
     beforeEach(function() {
         cy.request('POST', 'http://localhost:3001/api/testing/reset')
-        const user = {
+        const user1 = {
             name: 'Daniel Leskosky',
             username: 'dleskosky',
             password: 'iam31180'
         }
-        cy.request('POST', 'http://localhost:3001/api/users/', user)
+        const user2 = {
+            name: 'John Gardus',
+            username: 'jgardus',
+            password: 'iam29293'
+        }
+        cy.request('POST', 'http://localhost:3001/api/users/', user1)
+        cy.request('POST', 'http://localhost:3001/api/users/', user2)
         cy.visit('http://localhost:3000')
     })
 
@@ -56,7 +62,7 @@ describe('BlogList app', function() {
             cy.login({ username: 'dleskosky', password: 'iam31180'})
         })
 
-        it('A new blog can be added to list', function() {
+        it('a new blog can be added to list', function() {
             cy.contains('new blog').click()
             cy.get('#newTitle').type('TDD harms architecture')
             cy.get('#newAuthor').type('Robert C. Martin')
@@ -65,7 +71,7 @@ describe('BlogList app', function() {
             cy.contains('TDD harms architecture')
         })
 
-        it('A user can like a blog', function() {
+        it('a user can like a blog', function() {
             cy.addBlog({
                 title: 'TDD harms architecture',
                 author: 'Robert C. Martin',
@@ -74,6 +80,29 @@ describe('BlogList app', function() {
             cy.get('#viewButton').click()
             cy.get('#likeButton').click()
             cy.get('.numberOfLikes').contains('1')
+        })
+
+        it('a user can delete a blog', function() {
+            cy.addBlog({
+                title: 'TDD harms architecture',
+                author: 'Robert C. Martin',
+                url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
+            })
+            cy.get('#viewButton').click()
+            cy.get('#deleteButton').click()
+            cy.get('html').should('not.contain', 'TDD harms architecture')
+        })
+
+        it('a blog can only be deleted by user that added it to list', function() {
+            cy.addBlog({
+                title: 'TDD harms architecture',
+                author: 'Robert C. Martin',
+                url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
+            })
+            cy.get('#logoutButton').click()
+            cy.login({ username: 'jgardus', password: 'iam29293'})
+            cy.get('#viewButton').click()
+            cy.get('html').should('not.contain', 'remove') 
         })
     })
 })
