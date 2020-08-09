@@ -57,7 +57,7 @@ describe('BlogList app', function() {
         })
     })
 
-    describe.only('When logged in', function() {
+    describe('When logged in', function() {
         beforeEach(function() {
             cy.login({ username: 'dleskosky', password: 'iam31180'})
         })
@@ -103,6 +103,38 @@ describe('BlogList app', function() {
             cy.login({ username: 'jgardus', password: 'iam29293'})
             cy.get('#viewButton').click()
             cy.get('html').should('not.contain', 'remove') 
+        })
+
+        it('blogs are in descending order according to the number of likes', function() {
+            cy.addBlogWithLikes({
+                title: 'TDD harms architecture',
+                author: 'Robert C. Martin',
+                url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+                likes: 2
+            })
+            cy.addBlogWithLikes({
+                title: 'Canonical string reduction',
+                author: 'Edsger W. Dijkstra',
+                url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+                likes: 3
+            })
+            cy.addBlogWithLikes({
+                title: 'Type wars',
+                author: 'Robert C. Martin',
+                url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+                likes: 1
+            })
+            cy.contains('TDD harms architecture').parent().find('#viewButton').as('viewButton2Likes')
+            cy.contains('Canonical string reduction').parent().find('#viewButton').as('viewButton3Likes')
+            cy.contains('Type wars').parent().find('#viewButton').as('viewButton1Like')
+            cy.get('@viewButton2Likes').click()
+            cy.get('@viewButton3Likes').click()
+            cy.get('@viewButton1Like').click()
+            cy.get('.numberOfLikes').then( likes => {
+                cy.get(likes[0]).should('contain', '3')
+                cy.get(likes[1]).should('contain', '2')
+                cy.get(likes[2]).should('contain', '1')
+            })
         })
     })
 })
