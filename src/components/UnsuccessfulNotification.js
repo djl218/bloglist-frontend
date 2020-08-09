@@ -15,7 +15,7 @@ const UnsuccessfulNotification = ({ message }) => {
     }
 
     return (
-        <div style={notificationStyle}>
+        <div className="error" style={notificationStyle}>
             {message}
         </div>
     )
