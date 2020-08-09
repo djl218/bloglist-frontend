@@ -64,5 +64,16 @@ describe('BlogList app', function() {
             cy.get('#createButton').click()
             cy.contains('TDD harms architecture')
         })
+
+        it('A user can like a blog', function() {
+            cy.addBlog({
+                title: 'TDD harms architecture',
+                author: 'Robert C. Martin',
+                url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
+            })
+            cy.get('#viewButton').click()
+            cy.get('#likeButton').click()
+            cy.get('.numberOfLikes').contains('1')
+        })
     })
 })

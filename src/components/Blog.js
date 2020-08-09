@@ -18,7 +18,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
     <div style={blogStyle}>
       <div style={hideWhenVisible} className="defaultBlogDisplay">
         {blog.title} {blog.author}
-        <button onClick={() => setBlogInfoVisible(true)}>view</button>
+        <button id='viewButton' onClick={() => setBlogInfoVisible(true)}>view</button>
       </div>
       <div style={showWhenVisible} className="blogDisplayAfterClick">
         <div>
@@ -28,9 +28,9 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
         <div>
           {blog.url}
         </div>
-        <div>
+        <div className="numberOfLikes">
           {blog.likes}
-          <button onClick={addOneLike}>like</button>
+          <button id='likeButton' onClick={addOneLike}>like</button>
         </div>
         <div>
           {blog.user.name}
