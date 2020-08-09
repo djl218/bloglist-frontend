@@ -50,4 +50,19 @@ describe('BlogList app', function() {
             cy.get('html').should('not.contain', 'Daniel Leskosky logged in')
         })
     })
+
+    describe.only('When logged in', function() {
+        beforeEach(function() {
+            cy.login({ username: 'dleskosky', password: 'iam31180'})
+        })
+
+        it('A new blog can be added to list', function() {
+            cy.contains('new blog').click()
+            cy.get('#newTitle').type('TDD harms architecture')
+            cy.get('#newAuthor').type('Robert C. Martin')
+            cy.get('#newUrl').type('http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html')
+            cy.get('#createButton').click()
+            cy.contains('TDD harms architecture')
+        })
+    })
 })
