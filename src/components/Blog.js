@@ -45,7 +45,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
       </div>
     </div>
   )
-} 
+}
 
 
 export default Blog

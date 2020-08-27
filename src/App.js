@@ -9,13 +9,17 @@ import UnsuccessfuNotification from './components/UnsuccessfulNotification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+import { useDispatch } from 'react-redux'
+import { setUnsuccessfulNotification } from './reducers/unsuccessfulNotificationReducer'
+import { setSuccessfulNotification } from './reducers/successfulNotificationReducer'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
-  const [noSuccessMessage, setNoSuccessMessage] = useState(null)
+
+  const dispatch = useDispatch()
 
   const newBlogFormRef = React.createRef()
 
@@ -52,12 +56,9 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setNoSuccessMessage('wrong username or password')
       setUsername('')
       setPassword('')
-      setTimeout(() => {
-        setNoSuccessMessage(null)
-      }, 5000)
+      dispatch(setUnsuccessfulNotification('wrong username or password'))
     }
   }
 
@@ -75,10 +76,7 @@ const App = () => {
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
-        setSuccessMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
-        setTimeout(() => {
-          setSuccessMessage(null)
-        }, 5000)
+        dispatch(setSuccessfulNotification(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`))
       })
   }
 
@@ -112,7 +110,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
-        <UnsuccessfuNotification message={noSuccessMessage} />
+        <UnsuccessfuNotification />
         <Login
           handleLogin={handleLogin} username={username} setUsername={setUsername}
           password={password} setPassword={setPassword}
@@ -123,7 +121,7 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
-        <SuccessfulNotification message={successMessage} />
+        <SuccessfulNotification />
         <LoggedInMessage user={user.name} logout={logout} />
         <h2>create new</h2>
         <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
