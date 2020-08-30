@@ -9,17 +9,14 @@ const Login = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        try {
-          const username = event.target.username.value
-          const password = event.target.password.value
-          dispatch(initializeUser(username, password))
-          event.target.username.value = ''
-          event.target.password.value = ''
-        } catch (exception) {
-          event.target.username.value = ''
-          event.target.password.value = ''
-          dispatch(setUnsuccessfulNotification('wrong username or password'))
-        }
+        const username = event.target.username.value
+        const password = event.target.password.value
+
+        dispatch(initializeUser(username, password))
+        .catch(() => dispatch(setUnsuccessfulNotification('wrong username or password')))
+
+        event.target.username.value = ''
+        event.target.password.value = ''
     }
 
     return (
