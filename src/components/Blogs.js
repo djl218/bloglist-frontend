@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { addOneLike, deleteBlogInfoFor } from '../reducers/blogReducer'
 
 const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
@@ -19,7 +20,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
     return (
       <div style={blogStyle}>
         <div style={hideWhenVisible} className="defaultBlogDisplay">
-          {blog.title} {blog.author}
+          <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
           <button id='viewButton' onClick={() => setBlogInfoVisible(true)}>view</button>
         </div>
         <div style={showWhenVisible} className="blogDisplayAfterClick">
@@ -28,10 +29,10 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
             <button onClick={() => setBlogInfoVisible(false)}>hide</button>
           </div>
           <div>
-            {blog.url}
+          <a href={blog.url}>{blog.url}</a>
           </div>
           <div className="numberOfLikes">
-            {blog.likes}
+            {blog.likes} likes
             <button id='likeButton' onClick={addOneLike}>like</button>
           </div>
           <div>

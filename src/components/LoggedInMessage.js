@@ -17,12 +17,13 @@ const LoggedInMessage = () => {
         dispatch(initializeLogout())
         dispatch(tokenRemoval())
     }
+
     if (user !== null) {
         return (
-            <p>
+            <>
                 {user.name} logged in
                 <button id='logoutButton' onClick={logout}>logout</button>
-            </p>
+            </>
         )
     } else {
         return null

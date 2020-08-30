@@ -1,11 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { initializeUser } from '../reducers/loginReducer'
 import { setUnsuccessfulNotification } from '../reducers/unsuccessfulNotificationReducer'
 
 const Login = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -17,17 +19,18 @@ const Login = () => {
 
         event.target.username.value = ''
         event.target.password.value = ''
+        history.push('/')
     }
 
     return (
     <div>
         <form onSubmit={handleLogin}>
             <div>
-            username
+                username
                 <input name="username" />
             </div>
             <div>
-            password
+                password
                 <input type="password" name="password" />
             </div>
             <button id="login-button" type="submit">login</button>
