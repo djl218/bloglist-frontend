@@ -1,120 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Login from './components/Login'
 import LoggedInMessage from './components/LoggedInMessage'
 import Togglable from './components/Togglable'
 import NewBlogForm from './components/NewBlogForm'
-import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import SuccessfulNotification from './components/SuccessfulNotification'
 import UnsuccessfuNotification from './components/UnsuccessfulNotification'
-import blogService from './services/blogs'
-import loginService from './services/login'
 
-import { useDispatch } from 'react-redux'
-import { setUnsuccessfulNotification } from './reducers/unsuccessfulNotificationReducer'
-import { setSuccessfulNotification } from './reducers/successfulNotificationReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { initializeBlogs } from './reducers/blogReducer'
+import { initializeToken } from './reducers/tokenReducer'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-
   const dispatch = useDispatch()
+  const user = useSelector(state => state.login)
+  const token = useSelector(state => state.token)
 
   const newBlogFormRef = React.createRef()
 
   useEffect(() => {
-    blogService
-    .getAll()
-    .then(initialBlogs => {
-      setBlogs(initialBlogs)
-    })
-  }, [])
+    dispatch(initializeToken())
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-      const user = await loginService.login({
-        username, password,
-      })
-
-      window.localStorage.setItem(
-        'loggedBloglistappUser', JSON.stringify(user)
-      )
-
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      setUsername('')
-      setPassword('')
-      dispatch(setUnsuccessfulNotification('wrong username or password'))
-    }
-  }
-
-  const logout = () => {
-    window.localStorage.removeItem(
-      'loggedBloglistappUser'
-    )
-
-    setUser(null)
-  }
-
-  const addBlog = (blogObject) => {
-    newBlogFormRef.current.toggleVisibility()
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        dispatch(setSuccessfulNotification(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`))
-      })
-  }
-
-  const addOneLike = (id) => {
-    const blog = blogs.find(n => n.id === id)
-    const changedBlog = { ...blog, likes: blog.likes + 1 }
-
-    blogService
-      .update(id, changedBlog)
-      .then(() => {
-        setBlogs(blogs.map(blog => blog.id !== id ? blog : changedBlog))
-      })
-  }
-
-  const deleteBlogInfoFor = (id) => {
-    const blog = blogs.find(n => n.id === id)
-    const confirmWindowForDelete = window.confirm(`Remove ${blog.title} by ${blog.author}?`)
-
-    if (confirmWindowForDelete === true) {
-      blogService
-        .deleteBlog(id)
-        .then(() => {
-          setBlogs(blogs.filter(blog => blog.id !== id))
-        })
-    } else {
-      return blogs
-    }
-  }
-
-  if (user === null) {
+  if (!user && !token) {
     return (
       <div>
         <h2>Log in to application</h2>
         <UnsuccessfuNotification />
-        <Login
-          handleLogin={handleLogin} username={username} setUsername={setUsername}
-          password={password} setPassword={setPassword}
-        />
+        <Login />
       </div>
     )
   } else {
@@ -122,22 +36,12 @@ const App = () => {
       <div>
         <h2>blogs</h2>
         <SuccessfulNotification />
-        <LoggedInMessage user={user.name} logout={logout} />
+        <LoggedInMessage />
         <h2>create new</h2>
         <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
-          <NewBlogForm addBlogToList={addBlog} />
+          <NewBlogForm />
         </Togglable>
-        {blogs
-          .sort((a, b) => b.likes - a.likes)
-          .map(blog =>
-          <Blog
-            user={user}
-            key={blog.id}
-            blog={blog}
-            addOneLike={() => addOneLike(blog.id)}
-            deleteBlogInfo={() => deleteBlogInfoFor(blog.id)}
-          />
-        )}
+        <Blogs />
       </div>
     )
   }

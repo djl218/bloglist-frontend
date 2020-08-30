@@ -9,7 +9,7 @@ test('form calls the event handler it received as props with the right details w
     const component = render(
         <NewBlogForm addBlogToList={addBlogToList} />
     )
-    
+
     const newTitle = component.container.querySelector('#newTitle')
     const newAuthor = component.container.querySelector('#newAuthor')
     const newUrl = component.container.querySelector('#newUrl')

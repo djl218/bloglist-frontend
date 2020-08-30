@@ -1,44 +1,37 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
-const NewBlogForm = ({ addBlogToList }) => {
-    const [newTitle, setNewTitle] = useState('')
-    const [newAuthor, setNewAuthor] = useState('')
-    const [newUrl, setNewUrl] = useState('')
+import { addBlog } from '../reducers/blogReducer'
 
-    const handleNewTitle = (event) => {
-        setNewTitle(event.target.value)
-    }
+const NewBlogForm = () => {
+    const dispatch = useDispatch()
 
-    const handleNewAuthor = (event) => {
-        setNewAuthor(event.target.value)
-    }
-
-    const handleNewUrl = (event) => {
-        setNewUrl(event.target.value)
-    }
-
-    const addBlog = (event) => {
+    const addBlogToList = (event) => {
         event.preventDefault()
-        addBlogToList({
+        const newTitle = event.target.newTitle.value
+        const newAuthor = event.target.newAuthor.value
+        const newUrl = event.target.newUrl.value
+
+        dispatch(addBlog({
           title: newTitle,
           author: newAuthor,
           url: newUrl
-        })
+        }))
 
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
+        event.target.newTitle.value = ''
+        event.target.newAuthor.value = ''
+        event.target.newUrl.value = ''
     }
     return(
-        <form onSubmit={addBlog}>
+        <form onSubmit={addBlogToList}>
         <div>
-            title: <input id='newTitle' value={newTitle} onChange={handleNewTitle} />
+            title: <input name="newTitle" />
         </div>
         <div>
-            author: <input id='newAuthor' value={newAuthor} onChange={handleNewAuthor} />
+            author: <input name="newAuthor" />
         </div>
         <div>
-            url: <input id='newUrl' value={newUrl} onChange={handleNewUrl} />
+            url: <input name="newUrl" />
         </div>
         <div>
             <button id='createButton' type="submit">create</button>

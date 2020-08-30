@@ -2,12 +2,15 @@ var timerHelper
 
 const unsuccessfulNotificationReducer = (state = null, action) => {
     switch(action.type) {
-        case 'SHOW_NOTIFICATION':
+        case 'SHOW_NOTIFICATION': {
             return action.data.message
-        case 'HIDE_NOTIFICATION':
+        }
+        case 'HIDE_NOTIFICATION': {
             return action.data
-        default:
+        }
+        default: {
             return state
+        }
     }
 }
 
