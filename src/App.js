@@ -7,13 +7,13 @@ import Blog from './components/Blog'
 import Blogs from './components/Blogs'
 import User from './components/User'
 import Users from './components/Users'
+import NewUser from './components/NewUser'
 import SuccessfulNotification from './components/SuccessfulNotification'
 import UnsuccessfuNotification from './components/UnsuccessfulNotification'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeToken } from './reducers/tokenReducer'
 import { initializeBlogs } from './reducers/blogReducer'
-import { initializeUsers } from './reducers/userReducer'
 
 import {
   Switch,
@@ -29,7 +29,6 @@ const App = () => {
   useEffect(() => {
     dispatch(initializeToken())
     dispatch(initializeBlogs())
-    dispatch(initializeUsers())
   }, [dispatch])
 
   const newBlogFormRef = React.createRef()
@@ -43,13 +42,25 @@ const App = () => {
     padding: 5
   }
 
+  const noSpace = {
+    margin: 0,
+    padding: 0
+  }
+
   if (!loggedUser && !token) {
     return (
       <div>
         <h1>blog app</h1>
-        <h2>Log in to application</h2>
+        <SuccessfulNotification />
         <UnsuccessfuNotification />
+        <h2>Log in to application</h2>
         <Login />
+        <br></br>
+        <br></br>
+        <br></br>
+        <h2 style={noSpace}>Not a user?</h2>
+        <h3 style={noSpace}>Create an account here</h3>
+        <NewUser />
       </div>
     )
   } else {

@@ -11,9 +11,7 @@ const LoggedInMessage = () => {
     const user = JSON.parse(loggedUserJSON)
 
     const logout = () => {
-        window.localStorage.removeItem(
-            'loggedBloglistappUser'
-        )
+        window.localStorage.clear()
         dispatch(initializeLogout())
         dispatch(tokenRemoval())
     }

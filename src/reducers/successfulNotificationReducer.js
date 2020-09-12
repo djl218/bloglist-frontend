@@ -2,10 +2,10 @@ var timerHelper
 
 const successfulNotificationReducer = (state = null, action) => {
     switch(action.type) {
-        case 'SHOW_NOTIFICATION': {
-            return action.data.message
+        case 'SHOW_SUCCESS_NOTIFICATION': {
+            return action.data.successMessage
         }
-        case 'HIDE_NOTIFICATION': {
+        case 'HIDE_SUCCESS_NOTIFICATION': {
             return action.data
         }
         default: {
@@ -14,18 +14,18 @@ const successfulNotificationReducer = (state = null, action) => {
     }
 }
 
-export const setSuccessfulNotification = (message) => {
+export const setSuccessfulNotification = (successMessage) => {
     return async dispatch => {
         dispatch({
-            type: 'SHOW_NOTIFICATION',
-            data: { message }
+            type: 'SHOW_SUCCESS_NOTIFICATION',
+            data: { successMessage }
         })
 
         clearTimeout(timerHelper)
 
         timerHelper = setTimeout(() => {
             dispatch({
-                type: 'HIDE_NOTIFICATION',
+                type: 'HIDE_SUCCESS_NOTIFICATION',
                 data: null
             })
         }, 5000)

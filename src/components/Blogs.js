@@ -25,7 +25,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
         </div>
         <div style={showWhenVisible} className="blogDisplayAfterClick">
           <div>
-            {blog.title} by {blog.author}
+            <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
             <button onClick={() => setBlogInfoVisible(false)}>hide</button>
           </div>
           <div>
