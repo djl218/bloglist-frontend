@@ -17,7 +17,17 @@ const blogReducer = (state = [], action) => {
                 blog.id !== id ? blog : likedBlog
             )
         }
-        case 'ADD': {
+        case 'ADD_COMMENT': {
+            const id = action.data.blogId
+            const findBlog = state.find(n => n.id === id)
+            const blogWithComment = {
+                ...findBlog, userComments: action.data.userComments
+            }
+            return state.map(blog =>
+                blog.id !== id ? blog : blogWithComment
+            )
+        }
+        case 'ADD_BLOG': {
             const returnedBlog = action.data
             const copyBlogs = [...state]
             return copyBlogs.concat(returnedBlog)
@@ -62,11 +72,22 @@ export const addOneLike = (id, likes) => {
     }
 }
 
+export const addComment = (blogId, user, comments, comment) => {
+    return async dispatch => {
+        const blogWithComment = await blogService.createComment(blogId, user, comments, comment)
+        dispatch({
+            type: 'ADD_COMMENT',
+            data: blogWithComment
+        })
+        dispatch(setSuccessfulNotification('new comment added'))
+    }
+}
+
 export const addBlog = (blogObject) => {
     return async dispatch => {
         const addedBlog = await blogService.create(blogObject)
         dispatch({
-            type: 'ADD',
+            type: 'ADD_BLOG',
             data: addedBlog
         })
         dispatch(setSuccessfulNotification(`a new blog ${addedBlog.title} by ${addedBlog.author} added`))

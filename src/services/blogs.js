@@ -18,8 +18,17 @@ const create = async newObject => {
   const config = {
     headers: { Authorization: token },
   }
-
   const response = await axios.post(baseUrl, newObject, config)
+  return response.data
+}
+
+const createComment = async (blogId, user, userComments, comment) => {
+  const commentId = Math.floor((Math.random() * 100000) + 1).toString()
+  const newObject = {
+    blogId,
+    userComments: userComments.concat({ user, comment, commentId })
+  }
+  const response = await axios.put(`${baseUrl}/${blogId}/comments`, newObject)
   return response.data
 }
 
@@ -40,4 +49,4 @@ const deleteBlog = async (id) => {
   return response.data
 }
 
-export default { setToken, getAll, create, update, deleteBlog }
+export default { setToken, getAll, create, createComment, update, deleteBlog }

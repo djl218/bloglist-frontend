@@ -25,7 +25,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
         </div>
         <div style={showWhenVisible} className="blogDisplayAfterClick">
           <div>
-            {blog.title} {blog.author}
+            {blog.title} by {blog.author}
             <button onClick={() => setBlogInfoVisible(false)}>hide</button>
           </div>
           <div>
@@ -36,7 +36,7 @@ const Blog = ({ user, blog, addOneLike, deleteBlogInfo }) => {
             <button id='likeButton' onClick={addOneLike}>like</button>
           </div>
           <div>
-            {blog.user.name}
+            added by {blog.user.name}
           </div>
           <div>
             {

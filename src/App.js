@@ -46,6 +46,7 @@ const App = () => {
   if (!loggedUser && !token) {
     return (
       <div>
+        <h1>blog app</h1>
         <h2>Log in to application</h2>
         <UnsuccessfuNotification />
         <Login />
