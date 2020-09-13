@@ -21,6 +21,38 @@ import {
   Link
 } from 'react-router-dom'
 
+import styled from 'styled-components'
+
+const H1 = styled.h1`
+  font-size: 2.5em;
+  text-align: center;
+  color: Navy;
+`
+const H2 = styled.h2`
+  font-size: 1.5em;
+  text-align: left;
+  color: FireBrick;
+`
+const H3 = styled.h3`
+  font-size: 1.1em;
+  text-align: left;
+  color: FireBrick;
+`
+const Page = styled.div`
+  padding: 4em;
+  width: 100vw;
+  height: 100vh;
+  background: Thistle;
+`
+const Nav = styled.div`
+  padding: 1em;
+  background: SpringGreen;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: -150px;
+`
+
 const App = () => {
   const dispatch = useDispatch()
   const loggedUser = useSelector(state => state.login)
@@ -33,11 +65,6 @@ const App = () => {
 
   const newBlogFormRef = React.createRef()
 
-  const navStyle = {
-    background: 'lightgrey',
-    marginBottom: 10
-  }
-
   const padding = {
     padding: 5
   }
@@ -49,55 +76,53 @@ const App = () => {
 
   if (!loggedUser && !token) {
     return (
-      <div>
-        <h1>blog app</h1>
+      <Page>
+        <H1>blog app</H1>
         <SuccessfulNotification />
         <UnsuccessfuNotification />
-        <h2>Log in to application</h2>
+        <H2>Log in to application</H2>
         <Login />
         <br></br>
         <br></br>
         <br></br>
-        <h2 style={noSpace}>Not a user?</h2>
-        <h3 style={noSpace}>Create an account here</h3>
+        <H2 style={noSpace}>Not a user?</H2>
+        <H3 style={noSpace}>Create an account here</H3>
         <NewUser />
-      </div>
+      </Page>
     )
   } else {
     return (
-      <div>
-        <div>
-          <div style={navStyle}>
-            <Link style={padding} to="/">blogs</Link>
-            <Link style={padding} to="/users">users</Link>
-            <LoggedInMessage />
-          </div>
-        </div>
+      <Page>
+        <Nav>
+          <Link style={padding} to="/">blogs</Link>
+          <Link style={padding} to="/users">users</Link>
+          <LoggedInMessage />
+        </Nav>
 
         <Switch>
           <Route path="/users/:id">
-            <h1>blog app</h1>
+            <H1>blog app</H1>
             <User />
           </Route>
           <Route path="/users">
-            <h1>blog app</h1>
-            <h2>Users</h2>
+            <H1>blog app</H1>
+            <H2>Users</H2>
             <Users />
           </Route>
           <Route path="/blogs/:id">
-            <h1>blog app</h1>
+            <H1>blog app</H1>
             <Blog />
           </Route>
           <Route path="/">
+            <H1>blog app</H1>
             <SuccessfulNotification />
-            <h1>blog app</h1>
             <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
               <NewBlogForm />
             </Togglable>
             <Blogs />
           </Route>
         </Switch>
-      </div>
+      </Page>
     )
   }
 }

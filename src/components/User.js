@@ -1,6 +1,19 @@
 import React from 'react'
 import { useRouteMatch } from 'react-router-dom'
 
+import styled from 'styled-components'
+
+const H2 = styled.h2`
+    font-size: 1.5em;
+    text-align: left;
+    color: FireBrick;
+`
+const UL = styled.ul`
+    font-size: 1.2em;
+    text-align: left;
+    color: OrangeRed;
+`
+
 const UserHelper = ({ blog }) => {
     return (
         <li>{blog}</li>
@@ -18,14 +31,14 @@ const User = () => {
 
     if (user.blogs.length === 0) {
         return (
-            <h2>no blogs added by user</h2>
+            <H2>no blogs added by user</H2>
         )
     } else {
         return (
             <div>
-                <h2>{user.name}</h2>
-                <h2>added blogs</h2>
-                <ul>
+                <H2>{user.name}</H2>
+                <H2>added blogs</H2>
+                <UL>
                     {user.blogs
                         .map(blog =>
                             <UserHelper
@@ -34,7 +47,7 @@ const User = () => {
                             />
                         )
                     }
-                </ul>
+                </UL>
             </div>
         )
     }

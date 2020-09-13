@@ -1,13 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import styled from 'styled-components'
+
+const TD1 = styled.td`
+    font-size: 1.2em;
+    text-align: left;
+    color: Magenta;
+`
+const TD2 = styled.td`
+    font-size: 1.2em;
+    text-align: left;
+    color: OrangeRed;
+`
+
 const UsersHelper = ({ user, name, blogsCreated }) => {
     return (
         <tr>
             <td key={user.id} style={{ textAlign:'left' }}>
                 <Link to={`/users/${user.id}`}>{name}</Link>
             </td>
-            <td style={{ textAlign:'left' }}>{blogsCreated}</td>
+            <TD2 style={{ textAlign:'right' }}>{blogsCreated}</TD2>
         </tr>
     )
 }
@@ -21,7 +34,7 @@ const Users = () => {
             <thead>
                 <tr>
                     <td style={{ textAlign:'right' }}>&nbsp;</td>
-                    <td style={{ textAlign:'right' }}><b>blogs created</b></td>
+                    <TD1 style={{ textAlign:'right' }}><b>blogs created</b></TD1>
                 </tr>
             </thead>
             <tbody>

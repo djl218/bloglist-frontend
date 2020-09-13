@@ -5,6 +5,31 @@ import { useHistory } from 'react-router-dom'
 import { createUser } from '../reducers/loginReducer'
 import { setUnsuccessfulNotification } from '../reducers/unsuccessfulNotificationReducer'
 
+import styled from 'styled-components'
+
+const Button = styled.button`
+  color: Magenta;
+  background: Gold;
+  font-size: 1em;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  border: 2px solid PaleVioletRed;
+  border-radius: 3px;
+`
+const Input = styled.input`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: Cyan;
+  background: Indigo;
+  border: none;
+  border-radius: 3px;
+`
+const DIV = styled.div`
+  font-size: 1.1em;
+  text-align: left;
+  color: OrangeRed;
+`
+
 const NewUser = () => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,19 +56,19 @@ const NewUser = () => {
     return (
         <div>
             <form onSubmit={handleNewUser}>
-                <div>
+                <DIV>
                     name
-                    <input name="name" />
-                </div>
-                <div>
+                    <Input name="name" />
+                </DIV>
+                <DIV>
                     username
-                    <input name="username" />
-                </div>
-                <div>
+                    <Input name="username" />
+                </DIV>
+                <DIV>
                     password
-                    <input name="password" />
-                </div>
-                <button type="submit">create account</button>
+                    <Input name="password" />
+                </DIV>
+                <Button type="submit">create account</Button>
             </form>
         </div>
     )

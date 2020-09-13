@@ -9,7 +9,8 @@ const SuccessfulNotification = () => {
         borderStyle: 'solid',
         borderRadius: 5,
         padding: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        marginRight: 300
     }
 
     const successfulNotification = useSelector(({ successfulNotification }) => {

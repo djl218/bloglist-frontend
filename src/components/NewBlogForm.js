@@ -3,6 +3,30 @@ import { useDispatch } from 'react-redux'
 
 import { addBlog } from '../reducers/blogReducer'
 
+import styled from 'styled-components'
+
+const Button = styled.button`
+  color: Magenta;
+  background: Gold;
+  font-size: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid PaleVioletRed;
+  border-radius: 3px;
+`
+const Input = styled.input`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: Cyan;
+  background: Indigo;
+  border: none;
+  border-radius: 3px;
+`
+const DIV = styled.div`
+  font-size: 1.1em;
+  text-align: left;
+  color: OrangeRed;
+`
+
 const NewBlogForm = () => {
     const dispatch = useDispatch()
 
@@ -24,17 +48,17 @@ const NewBlogForm = () => {
     }
     return(
         <form onSubmit={addBlogToList}>
+        <DIV>
+            title: <Input name="newTitle" />
+        </DIV>
+        <DIV>
+            author: <Input name="newAuthor" />
+        </DIV>
+        <DIV>
+            url: <Input name="newUrl" />
+        </DIV>
         <div>
-            title: <input name="newTitle" />
-        </div>
-        <div>
-            author: <input name="newAuthor" />
-        </div>
-        <div>
-            url: <input name="newUrl" />
-        </div>
-        <div>
-            <button id='createButton' type="submit">create</button>
+            <Button id='createButton' type="submit">create</Button>
         </div>
         </form>
     )

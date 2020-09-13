@@ -4,6 +4,35 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { addOneLike, deleteBlogInfoFor, addComment } from '../reducers/blogReducer'
 
+import styled from 'styled-components'
+
+const Button = styled.button`
+  color: Magenta;
+  background: Gold;
+  font-size: 1em;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  border: 2px solid PaleVioletRed;
+  border-radius: 3px;
+`
+const Input = styled.input`
+  padding: 0.5em;
+  color: Cyan;
+  background: Indigo;
+  border: none;
+  border-radius: 3px;
+`
+const H2 = styled.h2`
+  font-size: 1.5em;
+  text-align: left;
+  color: FireBrick;
+`
+const DIV = styled.div`
+  font-size: 1.1em;
+  text-align: left;
+  color: OrangeRed;
+`
+
 const BlogHelper = ({ comment, user }) => {
     return (
         <li>{comment} - {user}</li>
@@ -51,35 +80,35 @@ const Blog = () => {
             <div>
                 <div>
                 <SuccessfulNotification />
-                    <h2>
+                    <H2>
                         {blog.title} by {blog.author}
-                    </h2>
+                    </H2>
                     <div>
                         <a href={blog.url}>{blog.url}</a>
                     </div>
                 </div>
-                <div className="numberOfLikes">
+                <DIV className="numberOfLikes">
                     {blog.likes} likes
-                    <button id='likeButton' onClick={() => dispatch(addOneLike(blog.id, blog.likes))}>like</button>
-                </div>
-                <div>
+                    <Button id='likeButton' onClick={() => dispatch(addOneLike(blog.id, blog.likes))}>like</Button>
+                </DIV>
+                <DIV>
                     added by {blog.user.name}
-                </div>
+                </DIV>
                 <div>
                     {
                         user.username === blog.user.username
-                        ? <button id='deleteButton' onClick={() => deleteBlog(blog.id)}>remove</button>
+                        ? <Button id='deleteButton' onClick={() => deleteBlog(blog.id)}>remove</Button>
                         : null
                     }
                 </div>
                 <div>
-                    <h2><b>comments</b></h2>
+                    <H2><b>comments</b></H2>
                     <form onSubmit={handleComment}>
                         <div>
-                            <input name="comment" />
-                            <button id="comment-button" type="submit">add comment</button>
+                            <Input name="comment" />
+                            <Button id="comment-button" type="submit">add comment</Button>
                         </div>
-                        <div>
+                        <DIV>
                             <ul>
                                 {
                                     blog.userComments === undefined
@@ -94,7 +123,7 @@ const Blog = () => {
                                         )
                                 }
                             </ul>
-                        </div>
+                        </DIV>
                     </form>
                 </div>
             </div>

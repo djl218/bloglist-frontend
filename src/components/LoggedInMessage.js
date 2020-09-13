@@ -4,6 +4,18 @@ import { useDispatch } from 'react-redux'
 import { initializeLogout } from '../reducers/loginReducer'
 import { tokenRemoval } from '../reducers/tokenReducer'
 
+import styled from 'styled-components'
+
+const Button = styled.button`
+    color: Magenta;
+    background: Gold;
+    font-size: 1em;
+    margin: 0.5em;
+    padding: 0.25em 1em;
+    border: 2px solid PaleVioletRed;
+    border-radius: 3px;
+`
+
 const LoggedInMessage = () => {
     const dispatch = useDispatch()
 
@@ -20,7 +32,7 @@ const LoggedInMessage = () => {
         return (
             <>
                 {user.name} logged in
-                <button id='logoutButton' onClick={logout}>logout</button>
+                <Button id='logoutButton' onClick={logout}>logout</Button>
             </>
         )
     } else {
