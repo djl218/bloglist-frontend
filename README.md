@@ -1,11 +1,8 @@
 # bloglist-frontend
-Frontend for the blog list app.
 
-Link to the blog list app:<br>
-https://warm-crag-63925.herokuapp.com/
+[<h3>See the app</h3>](https://warm-crag-63925.herokuapp.com/)
 
-The backend can be found here:<br>
-https://github.com/djl218/Blog-Backend
+[<h3>Backend code</h3>](https://github.com/djl218/Blog-Backend)
 
 This project builds upon the same concepts that I used when building the Phonebook App, but introduces more complexity.
 
@@ -13,7 +10,7 @@ The React frontend uses Redux for State Management. It has five reducers which a
 
 The Node.js backend stores the data in a MongoDB Collection and Mongoose is used to model that data. Integration testing was performed with SuperTest and Lodash. Additional end-to-end testing was done with Cypress.
 
-Some notable features of the application are:
+Some notable features of the application:
   *  login/logout functionality
   *  new account creation
   *  new posts display the user that added them
