@@ -1,6 +1,6 @@
 # Bloglist Frontend
 
-This is the frontend code for the Bloglist app - an app to keep track of the blogs in your life.
+This is the frontend code for the Bloglist app.  This app allows users to discuss relevant blogs.
 
 This project builds upon the same concepts that I used when building the [Phonebook App](https://github.com/djl218/Phonebook-Backend), but introduces more complexity.
 
