@@ -77,15 +77,15 @@ export const addBookmark = (user, blog) => {
             bookmarks = null
         } else {
             bookmarks = await userService.updateBookmarks(user, blog)
+            const updatedUser = await userService.getUser(user)
+            const updatedUsers = await userService.getAll()
+            window.localStorage.setItem(
+                'loggedBloglistappUser', JSON.stringify(updatedUser)
+            )
+            window.localStorage.setItem(
+                'loggedUsersForBlogListApp', JSON.stringify(updatedUsers)
+            )
         }
-        const updatedUser = await userService.getUser(user)
-        const updatedUsers = await userService.getAll()
-        window.localStorage.setItem(
-            'loggedBloglistappUser', JSON.stringify(updatedUser)
-        )
-        window.localStorage.setItem(
-            'loggedUsersForBlogListApp', JSON.stringify(updatedUsers)
-        )
         dispatch({
             type: 'ADD_BOOKMARK',
             data: bookmarks
