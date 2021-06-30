@@ -3,7 +3,7 @@ import blogService from '../services/blogs'
 import userService from '../services/users'
 import { setSuccessfulNotification } from './successfulNotificationReducer'
 
-const loginReducer = (state = null, action) => {
+const userReducer = (state = null, action) => {
     switch(action.type) {
         case 'INIT_USER': {
             return action.data
@@ -12,6 +12,12 @@ const loginReducer = (state = null, action) => {
             return action.data
         }
         case 'ADD_USER': {
+            return action.data
+        }
+        case 'ADD_BOOKMARK': {
+            return action.data
+        }
+        case 'DELETE_BOOKMARK': {
             return action.data
         }
         default: {
@@ -64,4 +70,45 @@ export const initializeLogout = () => {
     }
 }
 
-export default loginReducer
+export const addBookmark = (user, blog) => {
+    let bookmarks = null
+    return async dispatch => {
+        if (user.bookmarks.filter(bookmark => bookmark.title === blog.title).length > 0) {
+            bookmarks = null
+        } else {
+            bookmarks = await userService.updateBookmarks(user, blog)
+        }
+        const updatedUser = await userService.getUser(user)
+        const updatedUsers = await userService.getAll()
+        window.localStorage.setItem(
+            'loggedBloglistappUser', JSON.stringify(updatedUser)
+        )
+        window.localStorage.setItem(
+            'loggedUsersForBlogListApp', JSON.stringify(updatedUsers)
+        )
+        dispatch({
+            type: 'ADD_BOOKMARK',
+            data: bookmarks
+        })
+    }
+}
+
+export const deleteBookmark = (user, blogId) => {
+    return async dispatch => {
+        const bookmarks = await userService.removeBookmark(user, blogId)
+        const updatedUser = await userService.getUser(user)
+        const updatedUsers = await userService.getAll()
+        window.localStorage.setItem(
+            'loggedBloglistappUser', JSON.stringify(updatedUser)
+        )
+        window.localStorage.setItem(
+            'loggedUsersForBlogListApp', JSON.stringify(updatedUsers)
+        )
+        dispatch({
+            type: 'DELETE_BOOKMARK',
+            data: bookmarks
+        })
+    }
+}
+
+export default userReducer

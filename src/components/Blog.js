@@ -3,6 +3,7 @@ import SuccessfulNotification from './SuccessfulNotification'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { addOneLike, deleteBlogInfoFor, addComment } from '../reducers/blogReducer'
+import { addBookmark } from '../reducers/userReducer'
 
 import styled from 'styled-components'
 
@@ -90,6 +91,9 @@ const Blog = () => {
                 <DIV className="numberOfLikes">
                     {blog.likes} likes
                     <Button id='likeButton' onClick={() => dispatch(addOneLike(blog.id, blog.likes))}>like</Button>
+                </DIV>
+                <DIV>
+                    <Button id='bookmarkButton' onClick={() => dispatch(addBookmark(user, blog))}>bookmark</Button>
                 </DIV>
                 <DIV>
                     added by {blog.user.name}

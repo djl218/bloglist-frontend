@@ -5,6 +5,7 @@ import Togglable from './components/Togglable'
 import NewBlogForm from './components/NewBlogForm'
 import Blog from './components/Blog'
 import Blogs from './components/Blogs'
+import Bookmarks from './components/Bookmarks'
 import User from './components/User'
 import Users from './components/Users'
 import NewUser from './components/NewUser'
@@ -96,6 +97,7 @@ const App = () => {
         <Nav>
           <Link style={padding} to="/">blogs</Link>
           <Link style={padding} to="/users">users</Link>
+          <Link style={padding} to="/bookmarks">bookmarks</Link>
           <LoggedInMessage />
         </Nav>
 
@@ -108,6 +110,11 @@ const App = () => {
             <H1>blog app</H1>
             <H2>Users</H2>
             <Users />
+          </Route>
+          <Route path="/bookmarks">
+            <H1>blog app</H1>
+            <H2>Bookmarks</H2>
+            <Bookmarks />
           </Route>
           <Route path="/blogs/:id">
             <H1>blog app</H1>

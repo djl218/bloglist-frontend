@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import { initializeUser } from '../reducers/loginReducer'
+import { initializeUser } from '../reducers/userReducer'
 import { setUnsuccessfulNotification } from '../reducers/unsuccessfulNotificationReducer'
 
 import styled from 'styled-components'

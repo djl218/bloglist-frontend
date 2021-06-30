@@ -6,14 +6,14 @@ import successfulNotificationReducer from './reducers/successfulNotificationRedu
 import unsuccessfulNotificationReducer from './reducers/unsuccessfulNotificationReducer'
 import blogReducer from './reducers/blogReducer'
 import tokenReducer from './reducers/tokenReducer'
-import loginReducer from './reducers/loginReducer'
+import userReducer from './reducers/userReducer'
 
 const reducer = combineReducers({
     successfulNotification: successfulNotificationReducer,
     unsuccessfulNotification: unsuccessfulNotificationReducer,
     blogs: blogReducer,
     token: tokenReducer,
-    login: loginReducer
+    login: userReducer
 })
 
 const store = createStore(

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { initializeLogout } from '../reducers/loginReducer'
+import { initializeLogout } from '../reducers/userReducer'
 import { tokenRemoval } from '../reducers/tokenReducer'
 
 import styled from 'styled-components'
