@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { initializeLogout } from '../reducers/userReducer'
 import { tokenRemoval } from '../reducers/tokenReducer'
@@ -18,6 +19,7 @@ const Button = styled.button`
 
 const LoggedInMessage = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
     const user = JSON.parse(loggedUserJSON)
@@ -26,6 +28,7 @@ const LoggedInMessage = () => {
         window.localStorage.clear()
         dispatch(initializeLogout())
         dispatch(tokenRemoval())
+        history.push('/')
     }
 
     if (user !== null) {
