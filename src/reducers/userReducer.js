@@ -71,12 +71,9 @@ export const initializeLogout = () => {
 }
 
 export const addBookmark = (user, blog) => {
-    let bookmarks = null
     return async dispatch => {
-        if (user.bookmarks.filter(bookmark => bookmark.title === blog.title).length > 0) {
-            bookmarks = null
-        } else {
-            bookmarks = await userService.updateBookmarks(user, blog)
+        if (!user.bookmarks.filter(bookmark => bookmark.title === blog.title).length > 0) {
+            await userService.updateBookmarks(user, blog)
             const updatedUser = await userService.getUser(user)
             const updatedUsers = await userService.getAll()
             window.localStorage.setItem(
@@ -86,9 +83,11 @@ export const addBookmark = (user, blog) => {
                 'loggedUsersForBlogListApp', JSON.stringify(updatedUsers)
             )
         }
+        const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser')
+        const localStoreUser = JSON.parse(loggedUserJSON)
         dispatch({
             type: 'ADD_BOOKMARK',
-            data: bookmarks
+            data: localStoreUser
         })
     }
 }
