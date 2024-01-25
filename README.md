@@ -16,4 +16,4 @@ Some notable features of the application:
   *  users can comment on posts
   *  users can bookmark posts
 
-[link for blog app backend](https://github.com/djl218/Blog-Backend)
+[link for bloglist app backend](https://github.com/djl218/Blog-Backend)
